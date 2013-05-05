@@ -1,4 +1,6 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Storage</b> and script/action name <b>deleteItem</b></p>
-</div>
+<?php
+if ($this->view->viewData['ret'] != 0) {
+    header('HTTP/1.0 404 not found');
+}
+echo $this->view->viewData['message'];
+?>
