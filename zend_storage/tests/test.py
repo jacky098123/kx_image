@@ -13,7 +13,7 @@ from utils.http_client import HttpClient
 class Tester(CommonHandler, HttpClient):
     def __init__(self):
         HttpClient.__init__(self)
-        self.key = urllib.quote_plus('a/b/c/d/a.txt')
+        self.key = urllib.quote_plus('1d1180f3c7c41fd1760c5819fad8b4ed')
         pass
 
     def fetch(self):
@@ -32,4 +32,4 @@ if __name__ == '__main__':
     btlog_init('a.log', console=True, logfile=False, level=logging.DEBUG)
     a = Tester()
     a.Run()
-    a.fetch()
+#    a.fetch()

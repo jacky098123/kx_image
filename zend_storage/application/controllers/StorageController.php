@@ -17,6 +17,17 @@ class StorageController extends Zend_Controller_Action
         $this->logger_ = Zend_Registry::get('g_logger');
     }
 
+    private function convertKey($key)
+    {
+        $this->logger_->info("key: {$key}");
+        if (strlen($key) != 32)
+            return '';
+
+        $new_key = substr($key, 0, 2) . '/' . substr($key, 2, 2) . '/' . substr($key, 4);
+        $this->logger_->info("new key: {$new_key}");
+        return $new_key;
+    }
+
     public function indexAction()
     {
         // action body
@@ -26,7 +37,7 @@ class StorageController extends Zend_Controller_Action
     {
         $this->logger_->info('storeItemAction');
         $request = $this->getRequest();
-        $contentKey = $request->getParam(self::PARAM_KEY);
+        $contentKey = $this->convertKey($request->getParam(self::PARAM_KEY));
         $contentData = $request->getRawBody();
         $metadata = $request->getHeader('kx-storage');
         $metadata = json_decode($metadata);
@@ -35,7 +46,7 @@ class StorageController extends Zend_Controller_Action
         try {
             $this->adapter_->storeItem($contentKey, $contentData, $metadata);
             $viewData['ret']        = 0;
-            $viewData['message']    = 'succeed';
+            $viewData['message']    = 'succeed 2';
         } catch (Exception $e) {
             $viewData['ret']        = -1;
             $viewData['message']    = "store error {$e->getMessage()}";
@@ -49,7 +60,7 @@ class StorageController extends Zend_Controller_Action
     {
         $this->logger_->info('fetchItemAction');
         $request = $this->getRequest();
-        $contentKey = $request->getParam(self::PARAM_KEY);
+        $contentKey = $this->convertKey($request->getParam(self::PARAM_KEY));
 
         $viewData   = array();
         try {
@@ -77,7 +88,7 @@ class StorageController extends Zend_Controller_Action
     {
         $this->logger_->info('fetchItemAction');
         $request = $this->getRequest();
-        $contentKey = $request->getParam(self::PARAM_KEY);
+        $contentKey = $this->convertKey($request->getParam(self::PARAM_KEY));
 
         $viewData   = array();
         try {

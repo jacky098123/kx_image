@@ -3,5 +3,5 @@ if ($this->viewData['ret'] == 0) {
     echo $this->viewData['data'];
 } else {
     header("HTTP/1.0 404 Not Found");
-    echo $this->view->viewData['message'];
+    echo $this->viewData['message'];
 }

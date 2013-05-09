@@ -1,6 +1,6 @@
 <?php
-if ($this->view->viewData['ret'] != 0) {
+if ($this->viewData['ret'] != 0) {
     header('HTTP/1.0 404 not found');
 }
-echo $this->view->viewData['message'];
+echo $this->viewData['message'];
 ?>
