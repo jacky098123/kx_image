@@ -43,23 +43,23 @@ dataflow
 -------------
 ![dataflow](/image/image_server_dataflow.jpeg)
 
-dataflow for read image:
+**dataflow for read image:**
 
-# request to image server
-# read from redis. if succeed, return
-# read meta info from database, read from storage; format data; save to redis; return
+* request to image server
+* read from redis. if succeed, return
+* read meta info from database, read from storage; format data; save to redis; return
 
-dataflow for read image info:
+**dataflow for read image info:**
 
-# request to image server
-# read from redis, if succeed, return
-# read from database for meta data; save to redis; return
+* request to image server
+* read from redis, if succeed, return
+* read from database for meta data; save to redis; return
 
-dataflow for write image:
+**dataflow for write image:**
 
-# request to image server
-# save to storage
-# save to database
+* request to image server
+* save to storage
+* save to database
 
 
 image server
@@ -67,11 +67,11 @@ image server
 Image service contain write and read function:
 
 Write service provide various method to store image.
-# download service, accept URL and download into system
-# upload service, accept user upload image info, and store into system
+* download service, accept URL and download into system
+* upload service, accept user upload image info, and store into system
 
 Read service provide high performance service.
-# read original image, or get thumbnail, watermark etc.
+* read original image, or get thumbnail, watermark etc.
 
 
 storage
