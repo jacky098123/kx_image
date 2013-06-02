@@ -18,12 +18,12 @@ class ImageController extends Zend_Controller_Action
         // action body
     }
 
-    public function storeAction()
+    public function uploadAction()
     {
         // action body
     }
 
-    public function uploadAction()
+    public function storeAction()
     {
         // action body
     }

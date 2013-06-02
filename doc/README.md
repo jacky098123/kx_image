@@ -132,18 +132,23 @@ API
 -----------
 in order to fulfill different scenary, we support three type method to get image: 
 
-**image id or md5sum**
+**Thumbnail interface**
 
-width, height, and watermark is optional
+width, height, option and watermark is optional
 
-    http://${internet_domain}/image/read?id=${image id}&width=${width}&height=${height}&watermark=${watermark}
-    http://${internet_domain}/image/read?sum=${md5sum}&width=${width}&height=${height}&watermark=${watermark}
+    http://${internet_domain}/image/thumbnail?id=${image id}&width=${width}&height=${height}&optin=${option}&watermark=${watermark}
+    http://${internet_domain}/image/thumbnail?sum=${md5sum}&width=${width}&height=${height}&optin=${option}&watermark=${watermark}
 
-**doman + dkey**
+**Original interface**
 
 this type only support get original image
 
     http://${internet_domain}/${domain}/${dkey}
+
+**Store interface**
+
+**Upload interface**
+
 
 
 RESTfull api
