@@ -17,11 +17,16 @@ class StorageController extends Zend_Controller_Action
         $this->logger_ = Zend_Registry::get('g_logger');
     }
 
-    private function convertKey($key)
+    private function verifyKey($key)
     {
         $this->logger_->info("key: {$key}");
-        if (strlen($key) != 32)
-            return '';
+        if (strlen($key) != 32) {
+            $viewData           = array();
+            $viewData['ret']    = -1;
+            $viewData['message']= "invalid key {$key}";
+            $this->view->viewData   = $viewData;
+            return false;
+        }
 
         $new_key = substr($key, 0, 2) . '/' . substr($key, 2, 2) . '/' . substr($key, 4);
         $this->logger_->info("new key: {$new_key}");
@@ -37,7 +42,10 @@ class StorageController extends Zend_Controller_Action
     {
         $this->logger_->info('storeItemAction');
         $request = $this->getRequest();
-        $contentKey = $this->convertKey($request->getParam(self::PARAM_KEY));
+        $contentKey = $this->verifyKey($request->getParam(self::PARAM_KEY));
+        if ($contentKey == false)
+            return;
+
         $contentData = $request->getRawBody();
         $metadata = $request->getHeader('kx-storage');
         $metadata = json_decode($metadata);
@@ -60,7 +68,9 @@ class StorageController extends Zend_Controller_Action
     {
         $this->logger_->info('fetchItemAction');
         $request = $this->getRequest();
-        $contentKey = $this->convertKey($request->getParam(self::PARAM_KEY));
+        $contentKey = $this->verifyKey($request->getParam(self::PARAM_KEY));
+        if ($contentKey == false)
+            return;
 
         $viewData   = array();
         try {
@@ -88,7 +98,9 @@ class StorageController extends Zend_Controller_Action
     {
         $this->logger_->info('fetchItemAction');
         $request = $this->getRequest();
-        $contentKey = $this->convertKey($request->getParam(self::PARAM_KEY));
+        $contentKey = $this->verifyKey($request->getParam(self::PARAM_KEY));
+        if ($contentKey == false)
+            return;
 
         $viewData   = array();
         try {

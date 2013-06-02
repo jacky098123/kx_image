@@ -1,3 +1,4 @@
+
 kxbt_image
 ==========
 image service
@@ -25,9 +26,13 @@ impliment a image server and a storage framework
 feature
 =============
 1. use a adaptor as a storage. (then can use distribute FS, local filesystem)
+
 2. image server read image from storage, do image business
+
 3. use redis store thumbnail
+
 4. write: sync and async
+
 5. API version
 
 
@@ -38,20 +43,24 @@ dataflow
 -------------
 ![dataflow](/image/image_server_dataflow.jpeg)
 
-**dataflow for read image:**
+dataflow for read image:
+
 # request to image server
 # read from redis. if succeed, return
 # read meta info from database, read from storage; format data; save to redis; return
 
-**dataflow for read image info:**
+dataflow for read image info:
+
 # request to image server
 # read from redis, if succeed, return
 # read from database for meta data; save to redis; return
 
-**dataflow for write image:**
+dataflow for write image:
+
 # request to image server
 # save to storage
 # save to database
+
 
 image server
 --------------
