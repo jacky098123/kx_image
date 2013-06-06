@@ -1,5 +1,5 @@
 
-kxbt_image
+kxbt\_image
 ==========
 image service
 
@@ -15,7 +15,7 @@ dependency
 
 3. imagemagick
 
-    sudo apt-get install imagemagick
+    sudo apt-get install php5-imagick
 
 
 objective
@@ -83,21 +83,35 @@ database
 ----------
 database provide image meta info.
 
+    create table user (
+    id int auto_increment,
+    domain varchar(16) not null default '',
+    authorization varchar(32) not null default '',
+    appliciant  varchar(32) not null default '',
+    business    varchar(32) not null default '',
+    status      varchar(8) not null default 'created' comment 'created, open, closed',
+    create_time timestamp default '0000-00-00 00:00:00',
+    update_time timestamp,
+    primary key(id),
+    key idx_domain(domain, authorization)
+    ) engine=InnoDB, charset='utf8';
+
     create table image_info (
     id bigint auto_increment,
     domain varchar(16) not null default '',
     dkey varchar(255) not null default '',
-    user_metadata text not null default '' comment 'json data',
-    image_metadata text not null default '' comment 'json data',
+    storage_meta text not null default '' comment 'json data',
+    image_meta text not null default '' comment 'json data',
     md5sum varchar(32) not null default '',
     width int,
     height int,
     size int,
+    image_type varchar(8),
     create_time timestamp default '0000-00-00 00:00:00',
     update_time timestamp,
     primary key(id),
-    key idx_md5(md5sum),
-    key idx_domain(domain, dkey)
+    unique key idx_domain(domain, dkey),
+    key idx_md5(md5sum)
     ) engine=InnoDb, charset=utf8;
 
 
@@ -114,12 +128,12 @@ batch purpose
     id bigint auto_increment,
     domain varchar(16) not null default '',
     dkey varchar(255) not null default '',
-    url varchar(255) not null default '',
+    image_url varchar(255) not null default '',
     page_url varchar(255) not null default '',
     metadata text default '',
     callback text default '',
     flag varchar(16) default 'created' comment 'created, failed, succeed, warning',
-    flag_ext text default '',
+    flag_ext text,
     create_time timestamp default '0000-00-00 00:00:00',
     update_time timestamp,
     primary key (id),
@@ -130,7 +144,11 @@ batch purpose
 
 API
 -----------
-in order to fulfill different scenary, we support three type method to get image: 
+In order to fulfill different scenary, we support three type method to get image: 
+
+**Info interface**
+
+read image metadata from database
 
 **Thumbnail interface**
 
@@ -147,8 +165,18 @@ this type only support get original image
 
 **Store interface**
 
-**Upload interface**
+    http://${internet_domain}/image/store?domain=${domain}&dkey=${dkey}
 
+Http header `kx_meta_storage`
+
+    kx-meta-storage: {'biz': 'hotel', 'biz_il': '10000088', 'image_url': '', 'page_url': '', 'api_type': 'crawl'}
+
+
+Authorization
+---------------------
+Authorization only passed by Http Header, some request need authorization, some doesn't
+
+    kx-authorization: ${token}
 
 
 RESTfull api

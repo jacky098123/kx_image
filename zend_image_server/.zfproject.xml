@@ -16,6 +16,8 @@
           <actionMethod actionName="read"/>
           <actionMethod actionName="upload"/>
           <actionMethod actionName="store"/>
+          <actionMethod actionName="thumbnail"/>
+          <actionMethod actionName="info"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory enabled="false"/>
@@ -23,6 +25,7 @@
       <modelsDirectory>
         <modelFile modelName="ImageInfo"/>
         <modelFile modelName="ImageTask"/>
+        <modelFile modelName="User"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
@@ -45,6 +48,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Image">
             <viewScriptFile forActionName="store"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Image">
+            <viewScriptFile forActionName="thumbnail"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Image">
+            <viewScriptFile forActionName="info"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
